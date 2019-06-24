@@ -1,9 +1,18 @@
 <!--<app-row-grid [user]="user" (openChild)="openChildren($event.target.value)"></app-row-grid>-->
 <div *ngFor="let node of nodes;">
   <tr>
-        <td><button (click)="openChildren(node)" [class.margin]="node.type === 'isRepos' || node.type ===  'isCommit' ">{{node.isOpened ? '-' : '+'}}</button>{{' ' + node.name}}</td>
-        <td>{{node.nodeId}}</td>
-        <td><a href={{node.url}} target=_blank>{{node.url}}</a></td>
+    <td>
+      <button (click)="openChildren(node, $event.target)" [class.margin-repos]="node.type === 'isRepos'" *ngIf="node.type != 'isCommit'">
+          {{node.isOpened ? '-' : '+'}}
+      </button>
+      <div [class.margin-commit]="node.type === 'isCommit'">
+        {{'  ' + node.name}}
+      </div>
+    </td>
+    <td [class.margin]="node.type === 'isCommit'"> {{node.nodeId}}</td>
+    <td><a href={{node.url}} target=_blank>{{node.url}}</a></td>
   </tr>
-  <app-node-tree [ngClass]="{'isOpen': node.isOpened}" [nodes]="node.child" *ngIf="node.type != 'isCommit' && node.isOpened "></app-node-tree>
+  <app-node-tree [ngClass]="{'isOpen': node.isOpened}" [nodes]="node.child"
+                 *ngIf="node.type != 'isCommit' && node.isOpened ">
+  </app-node-tree>
 </div>

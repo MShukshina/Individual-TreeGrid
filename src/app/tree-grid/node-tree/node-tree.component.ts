@@ -20,12 +20,16 @@ export class NodeTreeComponent implements OnInit {
   ngOnInit() {
   }
 
-  openChildren(node) {
+  openChildren(node, target) {
     if (node.type === 'isUser') {
       this.gitHubRepositories = this.gitHubDataService.getGitHubRepositories(node.name);
     } else {
-      console.log(node);
-      /*this.gitHubCommits = this.gitHubDataService.getGitHubCommits(node.name, node.name);*/
+      /*const tr = target.parentElement;
+      const div = tr.parentElement;
+      const repos = div.parentElement;
+      const user = repos.parentElement;
+      console.log(user);*/
+      this.gitHubCommits = this.gitHubDataService.getGitHubCommits('A', node.name);
     }
     node.isOpened = !node.isOpened;
   }

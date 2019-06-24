@@ -44,7 +44,7 @@ export class GitHubDataService {
 
   getGitHubCommits(userName: string, reposName: string): Data [] {
     this.http.get(`https://api.github.com/repos/${userName}/${reposName}/commits?q=a&per_page=5&page=1`)
-      .pipe(map((rep: any) => rep.items.map((commit: any) => (
+      .pipe(map((rep: any) => rep.map((commit: any) => (
         {message: commit.message, node_id: commit.node_id, url: commit.url,  type: 'isCommit', child: []
         }))))
       .subscribe(res => {
