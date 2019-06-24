@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-row-grid',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./row-grid.component.css']
 })
 export class RowGridComponent implements OnInit {
+
+  @Input() user;
 
   constructor() { }
 

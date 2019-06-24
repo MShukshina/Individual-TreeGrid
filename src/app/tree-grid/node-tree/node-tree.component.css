@@ -1,0 +1,8 @@
+app-row-grid.isOpen {
+  width: 100%;
+  display: block;
+}
+
+li {
+  list-style-type: none;
+}

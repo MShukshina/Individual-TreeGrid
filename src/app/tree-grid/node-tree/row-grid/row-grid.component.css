@@ -1,0 +1,10 @@
+tr {
+/*  display: flex;
+  flex-direction: row;
+  justify-content: space-around;*/
+}
+
+td {
+  padding: 3px;
+  border: 1px solid dimgrey;
+}

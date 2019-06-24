@@ -1,17 +1,19 @@
 table {
-  height: 100%;
-  width: 100%;
+/*  height: 100%;
+  width: 100%;*/
   border-color: dimgrey;
   background-color: #fbfbfb;
+  border-collapse: collapse;
 }
 
 tr {
-  border: dimgrey;
-  display: flex;
+  /*display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-around;*/
 }
 
-td {
-  border: dimgrey;
+th {
+  padding: 3px;
+  border: 1px solid grey;
+  background: lightgrey;
 }
