@@ -1,0 +1,17 @@
+div {
+  padding: 10px;
+  background: lightgrey;
+  text-align: right;
+}
+
+
+
+select {
+  width: 50px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  height: 25px;
+  caret-color: lightgrey;
+}
+
+

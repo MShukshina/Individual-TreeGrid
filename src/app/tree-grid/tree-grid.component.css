@@ -1,19 +1,30 @@
 table {
-/*  height: 100%;
-  width: 100%;*/
-  border-color: dimgrey;
-  background-color: #fbfbfb;
+  height: 100%;
+  width: 100%;
+  color: #393939;
+  border: 1px solid #ccc;
+  font-style: normal;
   border-collapse: collapse;
 }
 
 tr {
-  /*display: flex;
+  display: flex;
   flex-direction: row;
-  justify-content: space-around;*/
+  justify-content: flex-start;
 }
 
 th {
+  width: 100%;
   padding: 3px;
-  border: 1px solid grey;
-  background: lightgrey;
+  color: white;
+  border: 1px solid #393939;
+  background: #4b4b4b;
+}
+
+app-node-tree {
+  width: 100%;
+}
+
+app-node-tree.isOpen {
+  display: block;
 }
