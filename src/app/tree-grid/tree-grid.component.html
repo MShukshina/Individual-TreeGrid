@@ -1,8 +1,8 @@
-<table class="table table-striped table-hover">
+<table>
   <tr>
     <th>Name</th>
     <th>Node_id</th>
     <th>URL</th>
   </tr>
-  <app-node-tree [nodes]="gitHubUsers"></app-node-tree>
+  <app-node-tree [countItemsOnPage]="countItemsOnChange" [nodes]="gitHubUsers"></app-node-tree>
 </table>

@@ -1,2 +1,4 @@
-<div></div>
-<app-paginator></app-paginator>
+<div>
+  <div> {{1 + (currentPage-1)*countItemsOnPage}}  - {{countItemsOnPage * currentPage}} of {{countItems}} records</div>
+  <app-paginator class="btAlignRight"></app-paginator>
+</div>

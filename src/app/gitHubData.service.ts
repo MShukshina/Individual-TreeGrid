@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {Data} from './Data';
+import {Data} from './tree-grid/Data';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +12,45 @@ export class GitHubDataService {
   private users: Data[] = [];
   private repositories: Data[] = [];
   private commits: Data[] = [];
+  private countItemsOnPage = 5;
+  private countUserItems = 5;
+  private countRepositoriesItems = 5;
+  private countCommitItems = 5;
+  private countItems = this.countUserItems * this.countRepositoriesItems * this.countCommitItems;
+  private currentPage = 1;
+
+  public counterPage: number[] = [];
 
   constructor(private http: HttpClient) { }
 
+  getCounterPage(): number[] {
+    return this.counterPage;
+  }
+
+  getCurrentPage(): number {
+    return this.currentPage;
+  }
+
+  setCurrentPage(current: number) {
+    this.currentPage = current;
+  }
+
+  getCountItems(): number {
+    return this.countItems;
+  }
+
+  getCountItemsOnPage(): number {
+    return this.countItemsOnPage;
+  }
+
+  setCountItemsOnPage(countItemsOnPage: number) {
+    this.countItemsOnPage = countItemsOnPage;
+  }
 
   getGitHubUsers(): Data[] {
-    this.http.get('https://api.github.com/search/users?q=a&per_page=5&page=1')
+    this.http.get(`https://api.github.com/search/users?q=a&per_page=${this.countUserItems}&page=1`)
       .pipe(map((us: any) => us.items.map((user: any) => ({
-        name: user.login, nodeId: user.node_id, url: user.html_url, type: 'isUser', child: []
+        parent: null, name: user.login, nodeId: user.node_id, url: user.html_url, type: 'isUser', child: []
       }))))
       .subscribe(res => {
         this.data = res;
@@ -30,9 +61,9 @@ export class GitHubDataService {
   }
 
   getGitHubRepositories(userName): Data[] {
-    this.http.get(`https://api.github.com/users/${userName}/repos?q=a&per_page=5&page=1`)
-      .pipe(map((rep: any) => rep.map((repos: any) => (
-        {name: repos.name, nodeId: repos.node_id, url: repos.html_url, type: 'isRepos', child: []
+    this.http.get(`https://api.github.com/users/${userName}/repos?q=a&per_page=${this.countRepositoriesItems}&page=1`)
+      .pipe(map((rep: any) => rep.map((repos: any) => ({
+        parent: userName, name: repos.name, nodeId: repos.node_id, url: repos.html_url, type: 'isRepos', child: []
         }))))
       .subscribe(res => {
         this.data = res;
@@ -43,9 +74,9 @@ export class GitHubDataService {
   }
 
   getGitHubCommits(userName: string, reposName: string): Data [] {
-    this.http.get(`https://api.github.com/repos/${userName}/${reposName}/commits?q=a&per_page=5&page=1`)
-      .pipe(map((rep: any) => rep.map((commit: any) => (
-        {message: commit.message, node_id: commit.node_id, url: commit.url,  type: 'isCommit', child: []
+    this.http.get(`https://api.github.com/repos/${userName}/${reposName}/commits?q=a&per_page=${this.countCommitItems}&page=1`)
+      .pipe(map((rep: any) => rep.map((commit: any) => ({
+        parent: reposName, name: commit.commit.message, nodeId: commit.node_id, url: commit.html_url,  type: 'isCommit', child: []
         }))))
       .subscribe(res => {
         this.data = res;

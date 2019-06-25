@@ -1,4 +1,5 @@
 table {
+  margin: 0px;
   height: 100%;
   width: 100%;
   color: #393939;
@@ -8,9 +9,12 @@ table {
 }
 
 tr {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  position: fixed;
+  top: 50px;
 }
 
 th {
@@ -22,7 +26,7 @@ th {
 }
 
 app-node-tree {
-  width: 100%;
+  top: 100px;
 }
 
 app-node-tree.isOpen {

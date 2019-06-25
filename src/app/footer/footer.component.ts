@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {GitHubDataService} from '../gitHubData.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  public countItems: number;
+  public countItemsOnPage: number;
+  public currentPage: number;
+
+  constructor(private gitHubDataService: GitHubDataService) { }
 
   ngOnInit() {
+    this.countItems = this.gitHubDataService.getCountItems();
+    this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
+    this.currentPage = this.gitHubDataService.getCurrentPage();
   }
 
 }
