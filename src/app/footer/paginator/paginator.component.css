@@ -10,13 +10,11 @@ a {
 }
 
 button:hover {
-  /*background: bottom;*/
-  border-style: outset;
-  border-color: buttonface;
-  border-image: initial;
+  background: #cbcbcb;
+  border: 1px solid #393939;
 }
 
 button:active {
-  background: #393939;
-  boreder: 1px solid #393939;
+  border: 1px solid #393939;
+  background: #cbcbcb;
 }

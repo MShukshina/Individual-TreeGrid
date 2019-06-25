@@ -8,8 +8,10 @@ import {GitHubDataService} from '../gitHubData.service';
 })
 export class FooterComponent implements OnInit {
 
+  @Input() countItemsOnPage: number;
+
   public countItems: number;
-  public countItemsOnPage: number;
+  public counterPage: number[];
   public currentPage: number;
 
   constructor(private gitHubDataService: GitHubDataService) { }
@@ -17,6 +19,11 @@ export class FooterComponent implements OnInit {
   ngOnInit() {
     this.countItems = this.gitHubDataService.getCountItems();
     this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
+    this.currentPage = this.gitHubDataService.getCurrentPage();
+    this.counterPage = this.gitHubDataService.getCounterPage();
+  }
+
+  onChangeCurrentPage() {
     this.currentPage = this.gitHubDataService.getCurrentPage();
   }
 
