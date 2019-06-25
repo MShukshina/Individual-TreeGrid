@@ -17,17 +17,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
-
-    console.log('app OnInit');
-    console.log('countItemsOnPage', this.countItemsOnPage);
   }
 
   onCountItemsOnPageChange() {
     this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
-    /*this.setCountOnPage(countItemsOnPage);*/
-
-    console.log('app change count');
-    console.log('countItemsOnPage', this.countItemsOnPage);
 
     this.countItems = this.gitHubDataService.getCountItems();
 
@@ -37,14 +30,8 @@ export class AppComponent implements OnInit {
 
   updateCounterPage() {
     this.counterPage.length = 0;
-    for (let i = 1; i <= this.countItems / this.countItemsOnPage; i++) {
+    for (let i = 1; i <= Math.ceil(this.countItems / this.countItemsOnPage); i++) {
       this.counterPage.push(i);
     }
   }
-
-  /*setCountOnPage(countItemsOnPage: number) {
-    this.gitHubDataService.setCountItemsOnPage(countItemsOnPage);
-    this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
-  }*/
-
 }

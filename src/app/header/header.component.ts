@@ -29,8 +29,7 @@ export class HeaderComponent implements OnInit {
     this.gitHubDataService.setCountItemsOnPage(countItemsOnPage);
     this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
 
-    console.log('Header');
-    console.log(this.countItemsOnPage);
+    this.gitHubDataService.setCurrentPage(1);
   }
 
 }

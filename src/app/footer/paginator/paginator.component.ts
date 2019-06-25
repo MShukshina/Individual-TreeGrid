@@ -24,10 +24,6 @@ export class PaginatorComponent implements OnInit {
 
     this.counterPage = this.gitHubDataService.getCounterPage();
     this.createCounterPage();
-
-    console.log('paginator OnInit');
-    console.log('countItemsOnPage', this.countItemsOnPage);
-    console.log('currentPage', this.currentPage);
   }
 
   createCounterPage() {
@@ -37,11 +33,38 @@ export class PaginatorComponent implements OnInit {
   }
 
   onChangeCurrentPage(target) {
-    /*const countItemsOnPage = target.innerHTML;
-    console.log(countItemsOnPage);*/
-    this.gitHubDataService.setCurrentPage(target.innerHTML);
+    if (target.firstChild.innerHTML === undefined) {
+      this.gitHubDataService.setCurrentPage(target.innerHTML);
+    } else {
+      this.gitHubDataService.setCurrentPage(target.firstChild.innerHTML);
+    }
     this.currentPage = this.gitHubDataService.getCurrentPage();
     this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
+    this.changeCurrentPage.emit();
+  }
+
+  onChangeCurrentPageStart() {
+    this.gitHubDataService.setCurrentPage(1);
+    this.currentPage = this.gitHubDataService.getCurrentPage();
+    this.changeCurrentPage.emit();
+  }
+
+  onChangeCurrentPageEnd() {
+    this.gitHubDataService.setCurrentPage(this.countItems / this.countItemsOnPage);
+    this.currentPage = this.gitHubDataService.getCurrentPage();
+    this.changeCurrentPage.emit();
+  }
+
+  onChangeCurrentPagePrev() {
+    this.gitHubDataService.setCurrentPage(this.currentPage - 1);
+    this.currentPage = this.gitHubDataService.getCurrentPage();
+    this.changeCurrentPage.emit();
+  }
+
+  onChangeCurrentPageNext() {
+    this.gitHubDataService.setCurrentPage(+this.currentPage + 1);
+    this.currentPage = this.gitHubDataService.getCurrentPage();
+    this.changeCurrentPage.emit();
   }
 
 }
