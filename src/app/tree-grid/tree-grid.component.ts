@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {GithubDataService} from './githubData.service';
+import {GitHubDataService} from '../gitHubData.service';
+import {Data} from './Data';
 
 @Component({
   selector: 'app-tree-grid',
@@ -8,11 +9,13 @@ import {GithubDataService} from './githubData.service';
 })
 export class TreeGridComponent implements OnInit {
 
-  public githubData;
+  public gitHubUsers: Data[] = [];
+  public countItemsOnChange: number;
 
-  constructor(private tasksSer4vice: GithubDataService) { }
+  constructor(private gitHubDataService: GitHubDataService) { }
 
   ngOnInit() {
+    this.gitHubUsers = this.gitHubDataService.getGitHubUsers();
+    this.countItemsOnChange = this.gitHubDataService.getCountItemsOnPage();
   }
-
 }

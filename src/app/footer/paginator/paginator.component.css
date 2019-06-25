@@ -1,0 +1,22 @@
+.button-page {
+  margin: 5px 5px;
+  width: 30px;
+}
+
+
+a {
+  text-decoration: none;
+  color: #393939;
+}
+
+button:hover {
+  /*background: bottom;*/
+  border-style: outset;
+  border-color: buttonface;
+  border-image: initial;
+}
+
+button:active {
+  background: #393939;
+  boreder: 1px solid #393939;
+}

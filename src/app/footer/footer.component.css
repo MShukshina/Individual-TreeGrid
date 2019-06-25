@@ -1,0 +1,14 @@
+div {
+  padding: 10px;
+  background: lightgrey;
+  display: flex;
+  flex-direction: row;
+}
+
+.btAlignRight{
+  margin-left: auto;
+}
+
+app-paginator {
+  padding: 10px;
+}

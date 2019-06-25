@@ -1,0 +1,5 @@
+<button>Start</button>
+<button>Prev</button>
+<button class="button-page" *ngFor="let page of counterPage"><a (click)="onChangeCurrentPage($event.target)" href={{page}}>{{page}}</a></button>
+<button>Next</button>
+<button>End</button>
