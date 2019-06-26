@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GitHubDataService} from '../gitHubData.service';
+import {DataService} from '../data.service';
 
 @Component({
   selector: 'app-footer',
@@ -14,17 +14,17 @@ export class FooterComponent implements OnInit {
   public counterPage: number[];
   public currentPage: number;
 
-  constructor(private gitHubDataService: GitHubDataService) { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.countItems = this.gitHubDataService.getCountItems();
-    this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
-    this.currentPage = this.gitHubDataService.getCurrentPage();
-    this.counterPage = this.gitHubDataService.getCounterPage();
+    this.countItems = this.dataService.getCountItems();
+    this.countItemsOnPage = this.dataService.getCountItemsOnPage();
+    this.currentPage = this.dataService.getCurrentPage();
+    this.counterPage = this.dataService.getCounterPage();
   }
 
   onChangeCurrentPage() {
-    this.currentPage = this.gitHubDataService.getCurrentPage();
+    this.currentPage = this.dataService.getCurrentPage();
   }
 
 }

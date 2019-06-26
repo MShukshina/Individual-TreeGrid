@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {GitHubDataService} from './gitHubData.service';
+import {DataService} from './data.service';
 
 @Component({
   selector: 'app-root',
@@ -13,18 +13,16 @@ export class AppComponent implements OnInit {
   public countItems: number;
   public countItemsOnPage: number;
 
-  constructor(private gitHubDataService: GitHubDataService) {}
+  constructor(private gitHubDataService: DataService) {}
 
   ngOnInit() {
-    this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
+    this.getCountItemsOnPage();
   }
 
   onCountItemsOnPageChange() {
-    this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
-
-    this.countItems = this.gitHubDataService.getCountItems();
-
-    this.counterPage = this.gitHubDataService.getCounterPage();
+    this.getCountItemsOnPage();
+    this.getCountItems();
+    this.getCounterPage();
     this.updateCounterPage();
   }
 
@@ -34,4 +32,18 @@ export class AppComponent implements OnInit {
       this.counterPage.push(i);
     }
   }
+
+  getCountItemsOnPage() {
+    this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
+  }
+
+  getCountItems() {
+    this.countItems = this.gitHubDataService.getCountItems();
+  }
+
+  getCounterPage() {
+    this.counterPage = this.gitHubDataService.getCounterPage();
+  }
+
+
 }

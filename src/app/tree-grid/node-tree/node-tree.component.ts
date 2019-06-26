@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Data} from '../Data';
-import {GitHubDataService} from '../../gitHubData.service';
+import {DataService} from '../../data.service';
 
 @Component({
   selector: 'app-node-tree',
@@ -11,23 +11,59 @@ export class NodeTreeComponent implements OnInit {
 
   @Input() nodes;
   @Input() child;
-  @Input() countItemsOnPage;
 
-  public gitHubRepositories: Data[] = [];
-  public gitHubCommits: Data[] = [];
+  public repositories: Data[] = [];
+  public commits: Data[] = [];
+  public countItemsOnPage;
+  public counterItemOnPage: number;
 
-  constructor(private gitHubDataService: GitHubDataService) { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
+    this.countItemsOnPage = this.dataService.getCountItemsOnPage();
+    this.counterItemOnPage = this.dataService.getCounterItemOnPage();
   }
 
-  openChildren(node, target) {
+  openChildren(node) {
     if (node.type === 'isUser') {
-      this.gitHubRepositories = this.gitHubDataService.getGitHubRepositories(node.name);
+      this.getGitHubRepositories(node.name);
     } else {
-      this.gitHubCommits = this.gitHubDataService.getGitHubCommits(node.parent, node.name);
+      this.getGitHubCommits(node.parent, node.name);
     }
+    this.setCounterItemOnPage(0);
+
     node.isOpened = !node.isOpened;
   }
 
+  getGitHubCommits(parent: string, name: string) {
+    this.dataService.getCommits(parent, name)
+      .subscribe((res) => {
+        this.commits = res;
+      });
+  }
+
+  getGitHubRepositories(name: string) {
+    this.dataService.getRepositories(name)
+      .subscribe((res) => {
+        this.repositories = res;
+      });
+  }
+
+  setCounterItemOnPage(counter: number) {
+    this.dataService.setCounterItemOnPage(counter);
+    this.counterItemOnPage = this.dataService.getCounterItemOnPage();
+  }
+
+  /*
+  displayItem() {
+    this.setCounterItemOnPage(++this.counterItemOnPage);
+    console.log(this.gitHubDataService.getCounterItemOnPage());
+
+    if (this.counterItemOnPage <= this.countItemsOnPage) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+*/
 }
