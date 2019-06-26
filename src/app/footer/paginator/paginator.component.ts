@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {GitHubDataService} from '../../gitHubData.service';
+import {DataService} from '../../data.service';
 
 @Component({
   selector: 'app-paginator',
@@ -15,15 +15,36 @@ export class PaginatorComponent implements OnInit {
   public countItemsOnPage: number;
   public currentPage: number;
 
-  constructor(private gitHubDataService: GitHubDataService) { }
+  constructor(private dataService: DataService) {
+  }
 
   ngOnInit() {
-    this.countItems = this.gitHubDataService.getCountItems();
-    this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
-    this.currentPage = this.gitHubDataService.getCurrentPage();
-
-    this.counterPage = this.gitHubDataService.getCounterPage();
+    this.getCountItems();
+    this.getCountItemsOnPage();
+    this.getCurrentPage();
+    this.getCounterPage();
     this.createCounterPage();
+  }
+
+  getCounterPage() {
+    this.counterPage = this.dataService.getCounterPage();
+  }
+
+  getCountItems() {
+    this.countItems = this.dataService.getCountItems();
+  }
+
+  getCurrentPage() {
+    this.currentPage = this.dataService.getCurrentPage();
+  }
+
+  setCurrentPage(currentPage: number) {
+    this.dataService.setCurrentPage(currentPage);
+    this.getCurrentPage();
+  }
+
+  getCountItemsOnPage() {
+    this.countItemsOnPage = this.dataService.getCountItemsOnPage();
   }
 
   createCounterPage() {
@@ -34,36 +55,31 @@ export class PaginatorComponent implements OnInit {
 
   onChangeCurrentPage(target) {
     if (target.firstChild.innerHTML === undefined) {
-      this.gitHubDataService.setCurrentPage(target.innerHTML);
+      this.setCurrentPage(target.innerHTML);
     } else {
-      this.gitHubDataService.setCurrentPage(target.firstChild.innerHTML);
+      this.setCurrentPage(target.firstChild.innerHTML);
     }
-    this.currentPage = this.gitHubDataService.getCurrentPage();
-    this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
+    this.getCountItemsOnPage();
     this.changeCurrentPage.emit();
   }
 
   onChangeCurrentPageStart() {
-    this.gitHubDataService.setCurrentPage(1);
-    this.currentPage = this.gitHubDataService.getCurrentPage();
+    this.setCurrentPage(1);
     this.changeCurrentPage.emit();
   }
 
   onChangeCurrentPageEnd() {
-    this.gitHubDataService.setCurrentPage(this.countItems / this.countItemsOnPage);
-    this.currentPage = this.gitHubDataService.getCurrentPage();
+    this.setCurrentPage(this.countItems / this.countItemsOnPage);
     this.changeCurrentPage.emit();
   }
 
   onChangeCurrentPagePrev() {
-    this.gitHubDataService.setCurrentPage(this.currentPage - 1);
-    this.currentPage = this.gitHubDataService.getCurrentPage();
+    this.setCurrentPage(this.currentPage - 1);
     this.changeCurrentPage.emit();
   }
 
   onChangeCurrentPageNext() {
-    this.gitHubDataService.setCurrentPage(+this.currentPage + 1);
-    this.currentPage = this.gitHubDataService.getCurrentPage();
+    this.setCurrentPage(+this.currentPage + 1);
     this.changeCurrentPage.emit();
   }
 

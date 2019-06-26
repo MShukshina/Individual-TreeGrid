@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {GitHubDataService} from '../gitHubData.service';
+import {DataService} from '../data.service';
 
 @Component({
   selector: 'app-header',
@@ -11,25 +11,36 @@ export class HeaderComponent implements OnInit {
   @Output() countItemsOnPageChange = new EventEmitter();
 
   public countItemsOnPage: number;
+  public counterItemOnPage: number;
 
-  constructor(private gitHubDataService: GitHubDataService) { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
+    this.counterItemOnPage = this.dataService.getCounterItemOnPage();
   }
 
   onCountItemsOnPageChange(target) {
     const countItemsOnPage = target.value;
     this.setCountOnPage(countItemsOnPage);
 
+    this.setCounterItemOnPage(0);
+
     this.countItemsOnPageChange.emit();
   }
 
-
   setCountOnPage(countItemsOnPage: number) {
-    this.gitHubDataService.setCountItemsOnPage(countItemsOnPage);
-    this.countItemsOnPage = this.gitHubDataService.getCountItemsOnPage();
+    this.setCountItemOnPage(countItemsOnPage);
+    this.dataService.setCurrentPage(1);
+  }
 
-    this.gitHubDataService.setCurrentPage(1);
+  setCountItemOnPage(countItemsOnPage: number) {
+    this.dataService.setCountItemsOnPage(countItemsOnPage);
+    this.countItemsOnPage = this.dataService.getCountItemsOnPage();
+  }
+
+  setCounterItemOnPage(counter: number) {
+    this.dataService.setCounterItemOnPage(counter);
+    this.counterItemOnPage = this.dataService.getCounterItemOnPage();
   }
 
 }
