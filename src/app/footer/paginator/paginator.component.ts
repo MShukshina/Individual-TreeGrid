@@ -53,12 +53,7 @@ export class PaginatorComponent implements OnInit {
     }
   }
 
-  onChangeCurrentPage(target) {
-    if (target.firstChild.innerHTML === undefined) {
-      this.setCurrentPage(target.innerHTML);
-    } else {
-      this.setCurrentPage(target.firstChild.innerHTML);
-    }
+  onChangeCurrentPage(countItemsOnPage) {
     this.getCountItemsOnPage();
     this.changeCurrentPage.emit();
   }

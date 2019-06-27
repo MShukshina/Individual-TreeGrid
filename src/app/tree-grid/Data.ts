@@ -3,15 +3,15 @@ export class Data {
   name: string;
   nodeId: string;
   url: string;
-  type: string;
+  level: number;
   child: Data [];
 
-  constructor(parent, name, nodeId, url, type, child) {
+  constructor(parent, name, nodeId, url, level, child) {
     this.parent = parent;
     this.name = name;
     this.nodeId = nodeId;
     this.url = url;
-    this.type = type;
+    this.level = level;
     this.child = child;
   }
 }

@@ -1,17 +1,15 @@
 <ng-container *ngFor="let node of nodes">
-  <tr *ngIf="nodes?.indexOf(node) <= countItemsOnPage">
+  <tr>
     <td>
-      <button (click)="openChildren(node)" [class.margin-repos]="node?.type === 'isRepos'" *ngIf="node?.type != 'isCommit'">
-          {{node.isOpened ? '-' : '+'}}
-      </button>
-      <div [class.margin-commit]="node?.type === 'isCommit'">
-        {{node?.name}}
+      <div class="column-name" [ngStyle]="{'margin':'0px 5px 0px '+ node?.level*20+'px'}">
+        <button (click)="openOrCloseChildren(node, node?.isOpened? 1 : 0)" *ngIf="node?.level == 1 || node?.level == 2">
+            {{node?.isOpened ? '-' : '+'}}
+        </button>
+       {{node?.name}}
       </div>
     </td>
-    <td [class.margin]="node?.type === 'isCommit'"> {{node?.nodeId}}</td>
+    <td> {{node?.nodeId}}</td>
     <td><a href={{node?.url}} target=_blank>{{node?.url}}</a></td>
   </tr>
-  <app-node-tree [ngClass]="{'isOpen': node?.isOpened}" [nodes]="node?.child"
-                 *ngIf="node?.type != 'isCommit' && node?.isOpened ">
-  </app-node-tree>
+  <app-node-tree [ngClass]="{'isOpen': node?.isOpened}" [nodes]="node?.child" *ngIf="node?.isOpened" (openedChild)="openChildren($event)"></app-node-tree>
 </ng-container>

@@ -1,6 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Data} from '../Data';
-import {DataService} from '../../data.service';
+import {Component, EventEmitter, Input, OnInit, Output, ɵgetDebugNode__POST_R3__} from '@angular/core';
 
 @Component({
   selector: 'app-node-tree',
@@ -10,60 +8,22 @@ import {DataService} from '../../data.service';
 export class NodeTreeComponent implements OnInit {
 
   @Input() nodes;
-  @Input() child;
+  @Output() openedChild = new EventEmitter<NodeTreeComponent>();
 
-  public repositories: Data[] = [];
-  public commits: Data[] = [];
-  public countItemsOnPage;
-  public counterItemOnPage: number;
-
-  constructor(private dataService: DataService) { }
+  constructor() {
+  }
 
   ngOnInit() {
-    this.countItemsOnPage = this.dataService.getCountItemsOnPage();
-    this.counterItemOnPage = this.dataService.getCounterItemOnPage();
   }
 
   openChildren(node) {
-    if (node.type === 'isUser') {
-      this.getGitHubRepositories(node.name);
-    } else {
-      this.getGitHubCommits(node.parent, node.name);
-    }
-    this.setCounterItemOnPage(0);
+    this.openedChild.emit(node);
+  }
 
+  openOrCloseChildren(node, isOpend) {
+    if (!isOpend) {
+      this.openChildren(node);
+    }
     node.isOpened = !node.isOpened;
   }
-
-  getGitHubCommits(parent: string, name: string) {
-    this.dataService.getCommits(parent, name)
-      .subscribe((res) => {
-        this.commits = res;
-      });
-  }
-
-  getGitHubRepositories(name: string) {
-    this.dataService.getRepositories(name)
-      .subscribe((res) => {
-        this.repositories = res;
-      });
-  }
-
-  setCounterItemOnPage(counter: number) {
-    this.dataService.setCounterItemOnPage(counter);
-    this.counterItemOnPage = this.dataService.getCounterItemOnPage();
-  }
-
-  /*
-  displayItem() {
-    this.setCounterItemOnPage(++this.counterItemOnPage);
-    console.log(this.gitHubDataService.getCounterItemOnPage());
-
-    if (this.counterItemOnPage <= this.countItemsOnPage) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-*/
 }

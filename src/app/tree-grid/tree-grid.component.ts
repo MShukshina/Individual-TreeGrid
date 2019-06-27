@@ -10,15 +10,51 @@ import {Observable} from 'rxjs';
 })
 export class TreeGridComponent implements OnInit {
 
-  public users: Data[] = [];
- /* public gitHubUsers$: Observable<Data[]>;*/
+  public users: Data[];
+  public repositories: Data[];
+  public commits: Data[];
+
+  /*public users$: Observable<Data[]>;
+  public repositories$: Observable<Data[]>;
+  public commits$: Observable<Data[]>;*/
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.dataService.getUsers()
+    this.getUsers();
+  }
+
+  openChild(node) {
+    if (node.level === 1) {
+      this.getRepositories(node);
+    } else {
+      this.getCommits(node);
+    }
+  }
+
+  getUsers() {
+    this.dataService.getGitHabUsers()
       .subscribe((res) => {
         this.users = res;
-      });
+        }
+      );
+  }
+
+  getRepositories(node) {
+    this.dataService.getGitHabRepositories(node.name)
+      .subscribe((res) => {
+          this.repositories = res;
+        }
+      );
+    this.users = this.dataService.getUsers();
+  }
+
+  getCommits(node) {
+    this.dataService.getGitHabCommits(node.parent, node.name)
+      .subscribe((res) => {
+          this.commits = res;
+        }
+      );
+    this.users = this.dataService.getUsers();
   }
 }
