@@ -29,6 +29,6 @@ app-node-tree {
   top: 100px;
 }
 
-app-node-tree.isOpen {
+app-node-tree_isOpen {
   display: block;
 }

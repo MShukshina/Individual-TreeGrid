@@ -12,11 +12,13 @@ export class HeaderComponent implements OnInit {
 
   public countItemsOnPage: number;
   public counterItemOnPage: number;
+  public itemsOnPage: number[];
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
     this.counterItemOnPage = this.dataService.getCounterItemOnPage();
+    this.itemsOnPage = this.dataService.getItemsOnPage();
   }
 
   onCountItemsOnPageChange(target) {

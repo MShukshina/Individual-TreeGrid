@@ -4,5 +4,5 @@
     <th>Node_id</th>
     <th>URL</th>
   </tr>
-  <app-node-tree [nodes]="users"></app-node-tree>
+  <app-node-tree [nodes]="users" (openedChild)="openChild($event)"></app-node-tree>
 </table>

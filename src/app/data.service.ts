@@ -2,13 +2,14 @@ import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {Data} from './tree-grid/Data';
 import {Observable} from 'rxjs';
-import {GitHubDataService} from './gitHubData.service';
+import {GithubService} from './github.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
+  private itemsOnPage: number[] = [5, 10, 20, 25, 50, 75, 100];
   private data;
   private users: Data[] = [];
   private repositories: Data[] = [];
@@ -23,7 +24,15 @@ export class DataService {
 
   public counterPage: number[] = [];
 
-  constructor(private gitHubDataService: GitHubDataService) { }
+  constructor(private githubService: GithubService) { }
+
+  getItemsOnPage(): number[] {
+    return this.itemsOnPage;
+  }
+
+  getUsers(): Data[] {
+    return this.users;
+  }
 
   getCounterItemOnPage(): number {
     return this.counterItemOnPage;
@@ -57,8 +66,8 @@ export class DataService {
     this.countItemsOnPage = countItemsOnPage;
   }
 
-  getUsers(): Observable<Data[]> {
-    return this.gitHubDataService.getGitHubUsers(this.countUserItems)
+  getGitHabUsers(): Observable<Data[]> {
+    return this.githubService.getGitHubUsers(this.countUserItems)
       .pipe(
         map((res) => {
           this.data = res;
@@ -69,8 +78,8 @@ export class DataService {
       );
   }
 
-  getRepositories(userName: string): Observable<Data[]> {
-    return this.gitHubDataService.getGitHubRepositories(userName, this.countRepositoriesItems)
+  getGitHabRepositories(userName: string): Observable<Data[]> {
+    return this.githubService.getGitHubRepositories(userName, this.countRepositoriesItems)
       .pipe(
         map((res) => {
           this.data = res;
@@ -81,8 +90,8 @@ export class DataService {
       );
   }
 
-  getCommits(userName: string, reposName: string): Observable<Data[]> {
-    return this.gitHubDataService.getGitHubCommits(userName, reposName, this.countCommitItems)
+  getGitHabCommits(userName: string, reposName: string): Observable<Data[]> {
+    return this.githubService.getGitHubCommits(userName, reposName, this.countCommitItems)
       .pipe(
         map((res) => {
           this.data = res;
